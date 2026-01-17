@@ -1,14 +1,16 @@
 "use client";
-import React, { useRef } from "react";
-import DNAScene from "../components/DNAScene";
-import Cursor from "../components/Cursor";
+import Certifctas from "../pages/Certifctas";
+
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import Cursor from "../components/Cursor";
+import DNAScene from "../components/DNAScene";
 import Text from "../pages/Text";
+import ZoomSection from "../pages/ZoomSection";
 gsap.registerPlugin(ScrollTrigger);
-
 const LandPage = () => {
   const containerRef = useRef();
   const titleRf = useRef();
@@ -18,9 +20,13 @@ const LandPage = () => {
 
   useGSAP(
     () => {
+      gsap.set(scrollRef.current, {
+        opacity: 0,
+        x: -100,
+      });
       let split;
+      if (!nameRef.current) return;
 
-      // تهيئة المركز بشكل صحيح لضمان عدم حدوث قفزة (jump)
       gsap.set(nameRef.current, {
         xPercent: -50,
         yPercent: -50,
@@ -29,6 +35,10 @@ const LandPage = () => {
       });
 
       const runAnimation = () => {
+        // تحديد أجزاء الاسم بشكل دقيق
+        const first = nameRef.current.querySelector(".first-name");
+        const last = nameRef.current.querySelector(".last-name");
+
         // Split text using SplitType
         split = new SplitType(titleRf.current, {
           types: "words, chars",
@@ -38,56 +48,67 @@ const LandPage = () => {
 
         const tl = gsap.timeline();
 
-        // 1. Intro Animation: Name appears big
-        tl.from(nameRef.current, {
-          scale: 0.5,
+        // 1. البداية: ظهور الاسم كبيراً في المنتصف
+        tl.from([first, last], {
+          scale: 0.8,
+          y: 100,
           opacity: 0,
-          duration: 1.5,
-          ease: "power4.out",
+          duration: 1.2,
+          ease: "back.out(1.2)",
+          stagger: 0.15,
         })
-          // 2. Name moves to corner and shrinks
-          .to(nameRef.current, {
-            top: "2rem",
-            left: "2rem",
-            xPercent: 0,
-            yPercent: 0,
-            scale: 0.25,
-            duration: 1.8,
-            ease: "expo.inOut",
-          })
-          // 3. Main Title and Description appear
-          .from(
-            split.chars,
+          // 2. الحركة للركن: الاسم بالكامل يتحرك لأعلى اليسار ليصبح لوجو
+          .to(
+            nameRef.current,
             {
-              x: -100,
-              rotation: 10,
-              opacity: 0,
-              duration: 0.7,
-              ease: "power4.out",
-              stagger: {
-                from: "random",
-                each: 0.04,
-              },
+              left: "4rem",
+              top: "3rem",
+              xPercent: 0,
+              yPercent: 0,
+              scale: 0.35,
+              duration: 1.5,
+              ease: "expo.inOut",
+              delay: 0.8, // وقفة بسيطة للمشاهدة
             },
             "-=1"
           )
+          // 3. الانفصال (THE SPLIT): الاسم الأخير ينطلق لليمين تماماً
+
+          // 4. ظهور المحتوى: لا يبدأ إلا بعد انتهاء الانفصال
+          .from(split.chars, {
+            x: -50,
+            y: 20,
+            rotation: 5,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: {
+              from: "left",
+              each: 0.03,
+            },
+          })
           .to(
             descRef.current,
             {
               opacity: 1,
               y: 0,
-              duration: 1,
-              stagger: 0.1,
+              duration: 0.8,
               ease: "power2.out",
             },
-            "-=1"
-          );
+            "-=0.4"
+          )
+          .to(scrollRef.current, {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            ease: "power2.out",
+          });
         const scrollTl = gsap.timeline({
           scrollTrigger: {
-            trigger: "body",
+            trigger: containerRef.current,
             start: "top top",
-            end: "bottom bottom",
-            scrub: 1.5,
+            end: "top+=800 top",
+            scrub: true,
           },
         });
         scrollTl
@@ -95,8 +116,7 @@ const LandPage = () => {
             x: -100,
             rotation: 100,
             opacity: 0,
-            duration: 1,
-            ease: "power4.out",
+            ease: "none", // ✅ بدل ease لتكون سلسة مع scroll
             stagger: {
               from: "random",
               each: 0.04,
@@ -105,35 +125,31 @@ const LandPage = () => {
           .to(
             descRef.current,
             {
+              y: 100,
               opacity: 0,
-              x: -100,
-              duration: 0.5,
-              stagger: 0.1,
-              ease: "power2.out",
+              ease: "none",
             },
-            "-=1"
+            0
           )
           .to(
             scrollRef.current,
             {
+              x: -100,
               opacity: 0,
-              duration: 0.5,
-              ease: "power2.out",
+              ease: "none",
             },
-            "-=1"
+            0
           )
           .to(
             nameRef.current,
             {
               opacity: 0,
-              duration: 0.5,
-              ease: "power2.out",
+              ease: "none",
             },
             0
           );
       };
 
-      // Ensure fonts are loaded before splitting to avoid layout shifts
       document.fonts.ready.then(() => {
         runAnimation();
       });
@@ -148,46 +164,21 @@ const LandPage = () => {
   return (
     <main
       ref={containerRef}
-      className="relative w-full min-h-[300vh] bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white overflow-x-hidden selection:bg-teal-500/30"
+      className="mainpage relative w-full min-h-[300vh] bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 text-white overflow-x-hidden selection:bg-teal-500/30"
     >
       <Cursor />
       <div className="fixed inset-0 z-0">
         <DNAScene />
       </div>
 
-      {/* Intro Name / Logo with Fixed Video Mask */}
+      {/* Intro Name / Logo with Container Ref */}
       <div
         ref={nameRef}
-        className="fixed z-50 origin-top-left pointer-events-none"
+        className="fixed z-[100] origin-top-left pointer-events-none"
       >
-        <div className="relative inline-block overflow-hidden rounded-2xl group border border-white/10 shadow-2xl">
-          {/* 1. Video Layer (Bottom) */}
-          <div className="absolute inset-0 z-0">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src="/video.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          {/* 2. Masking Layer (Top) */}
-          {/* هذه الطبقة هي السحر: خلفية مطابقة للموقع ونص أبيض مع Mix Blend Multiply */}
-          <h1
-            ref={nameRef}
-            className="relative z-10 text-6xl md:text-9xl font-black uppercase whitespace-nowrap leading-none px-8 py-6 bg-slate-950 text-white mix-blend-multiply select-none"
-            style={{
-              isolation: "isolate",
-            }}
-          >
-            Mohamed Elshshtawy
-          </h1>
-
-          {/* 3. Subtle Glossy Overlay */}
-          <div className="absolute inset-0 z-20 pointer-events-none bg-linear-to-tr from-teal-500/10 to-transparent opacity-50"></div>
+        <div className="flex items-baseline gap-4 text-5xl md:text-[7.5vw] font-black uppercase tracking-tighter transition-all">
+          <span className="first-name text-white">Mohamed</span>
+          <span className="last-name text-white/80">Elshshtawy</span>
         </div>
       </div>
 
@@ -222,6 +213,7 @@ const LandPage = () => {
         </div>
       </div>
       <Text />
+      <Certifctas />
     </main>
   );
 };

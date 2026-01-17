@@ -16,58 +16,66 @@ function AnimatedDNA() {
   useGSAP(() => {
     if (!groupRef.current) return;
 
+    // الوضع الابتدائي
+    gsap.set(groupRef.current.position, {
+      x: 0,
+      y: -1,
+      z: 4,
+    });
+
     gsap.set(groupRef.current.rotation, {
       x: 0,
       y: 0,
       z: 0,
     });
 
-    gsap.set(groupRef.current.position, { y: -1, z: 5 });
-
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: "body",
+        trigger: ".mainpage",
         start: "top top",
         end: "bottom bottom",
         scrub: 1.5,
       },
     });
 
-    tl.to(
-      groupRef.current.position,
-      {
-        x: 3,
-        z: -5,
-        ease: "power1.inOut",
-      },
-      0
-    )
+    // ➜ حركة الريح + اللف
+    tl.to(groupRef.current.position, {
+      x: -2,
+      ease: "sine.inOut",
+    })
       .to(
         groupRef.current.rotation,
         {
-          z: Math.PI / 4,
-          ease: "none",
+          y: Math.PI * 4, // لف حوالين نفسه 2 لفه كاملة
+          z: Math.PI / 6, // ميل كأن في ريح
+          ease: "sine.inOut",
         },
         0
       )
-      .to(
-        groupRef.current.position,
-        {
-          x: -3,
-          z: 2,
-          ease: "power1.inOut",
-        },
-        ">"
-      );
+      .to(groupRef.current.position, {
+        x: 3,
+
+        ease: "sine.inOut",
+      })
+      .to(groupRef.current.rotation, {
+        z: -Math.PI / 6,
+        ease: "sine.inOut",
+      })
+      .to(groupRef.current.position, {
+        x: -10,
+        ease: "sine.inOut",
+      });
   }, []);
 
   return (
     <group ref={groupRef}>
-      <Float speed={1} rotationIntensity={0.2} floatIntensity={0.2}>
-        <Center>
-          <DNA scale={0.2} />
-        </Center>
-      </Float>
+      <group>
+        <Float speed={1} rotationIntensity={0.2} floatIntensity={0.2}>
+          <Center>
+            <DNA scale={0.2} />
+          </Center>
+        </Float>
+      </group>
     </group>
   );
 }
@@ -81,7 +89,7 @@ export default function DNAScene() {
         dpr={[1, 1.5]}
         className="fixed inset-0 z-0 pointer-events-none"
       >
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={1} />
         <pointLight position={[10, 10, 10]} />
         <AnimatedDNA />
         <Sparkles

@@ -11,20 +11,44 @@ const Text = () => {
 
   const sections = [
     {
-      title: "Data Analysis",
-      desc: "Processing complex biological data to extract meaningful patterns and insights using advanced computational methods.",
+      title: "Bioinformatics",
+      desc: "Analyzing biological data such as DNA, RNA, and protein structures using computational and statistical approaches to uncover biological insights.",
     },
     {
       title: "Chemoinformatics",
-      desc: "Applying informatics techniques to solve chemical and pharmacological problems, accelerating drug discovery.",
+      desc: "Leveraging chemical data, molecular descriptors, and computational models to accelerate drug discovery and chemical research.",
     },
     {
-      title: "Bioinformatics",
-      desc: "Developing and using software tools to understand biological data, especially DNA sequences and protein structures.",
+      title: "Data Analysis",
+      desc: "Transforming raw scientific and experimental data into meaningful insights through statistical analysis, visualization, and data exploration.",
     },
     {
-      title: "Full Stack Development",
-      desc: "Building integrated web solutions that bridge the gap between scientific research and user-friendly interfaces.",
+      title: "Data Science",
+      desc: "Building data-driven models that combine statistics, programming, and domain knowledge to support scientific and business decisions.",
+    },
+    {
+      title: "Data Engineering",
+      desc: "Designing scalable data pipelines, ETL workflows, and optimized data storage systems to support analytics and machine learning.",
+    },
+    {
+      title: "Machine Learning",
+      desc: "Developing predictive models using supervised and unsupervised learning techniques to solve complex scientific and real-world problems.",
+    },
+    {
+      title: "Deep Learning",
+      desc: "Applying neural networks and deep architectures to model complex biological patterns, images, and high-dimensional data.",
+    },
+    {
+      title: "Frontend Engineering",
+      desc: "Creating interactive, performant, and visually engaging user interfaces using modern frameworks like React and advanced animation techniques.",
+    },
+    {
+      title: "Backend Engineering",
+      desc: "Building robust APIs, databases, and server-side systems that power data-intensive and scalable applications.",
+    },
+    {
+      title: "React Native",
+      desc: "Developing cross-platform mobile applications that deliver high-performance experiences across iOS and Android.",
     },
   ];
 
