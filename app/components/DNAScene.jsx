@@ -104,7 +104,7 @@ export default function DNAScene() {
         dpr={[1, 1.5]}
         className="fixed inset-0 z-0 pointer-events-none"
       >
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={null}>
           <ambientLight intensity={1} />
           <pointLight position={[10, 10, 10]} />
           <AnimatedDNA />

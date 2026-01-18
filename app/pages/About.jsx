@@ -241,7 +241,7 @@ const About = () => {
           <ambientLight intensity={1} />
           <pointLight position={[10, 10, 10]} intensity={2} />
           <directionalLight position={[-5, 5, 5]} intensity={1.5} />
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={null}>
             <FloatingCore />
             <Preload all />
           </Suspense>
