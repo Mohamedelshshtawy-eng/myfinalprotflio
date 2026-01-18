@@ -16,7 +16,7 @@ function AnimatedDNA() {
   useGSAP(() => {
     if (!groupRef.current) return;
 
-    // الوضع الابتدائي
+    // Initial State
     gsap.set(groupRef.current.position, {
       x: 0,
       y: -1,
@@ -46,8 +46,8 @@ function AnimatedDNA() {
       .to(
         groupRef.current.rotation,
         {
-          y: Math.PI * 4, // لف حوالين نفسه 2 لفه كاملة
-          z: Math.PI / 6, // ميل كأن في ريح
+          y: Math.PI * 4, // 2 full rotations
+          z: Math.PI / 6, // Tilt for wind effect
           ease: "sine.inOut",
         },
         0

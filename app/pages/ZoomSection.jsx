@@ -57,7 +57,7 @@ export default function ZoomSection() {
             ease: "none",
           },
           "-=0.15"
-        ); // يظهر الأبيض في آخر لحظة ليغطي كل شيء
+        ); // White-out transition at the final stage
     },
     { scope: containerRef }
   );
@@ -65,21 +65,21 @@ export default function ZoomSection() {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 overflow-hidden flex items-center justify-center m-0 p-0"
+      className="relative h-screen bg-transparent overflow-hidden flex items-center justify-center m-0 p-0"
     >
       {/* 3D Background Scene */}
       <div className="absolute inset-0 z-0">
         <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
           <ambientLight intensity={1} />
           <pointLight position={[10, 10, 10]} />
-          <Sparkles
+          {/* <Sparkles
             count={200}
             scale={12}
             size={2}
             speed={0.4}
             opacity={0.6}
             color="#22d3ee"
-          />
+          /> */}
           <Environment preset="city" />
         </Canvas>
       </div>
@@ -103,7 +103,7 @@ export default function ZoomSection() {
         </svg>
       </div>
 
-      {/* الطبقة البيضاء النهائية - تغطي كل شيء فوق الـ 3D والنص */}
+      {/* Final White Overlay - Covers all elements and 3D scene */}
       <div
         ref={whiteOverlayRef}
         className="absolute inset-0 bg-white opacity-0 z-[100] pointer-events-none"

@@ -24,13 +24,13 @@ export default function Flask(props) {
         <mesh geometry={nodes.Cylinder_2.geometry}>
           <meshPhysicalMaterial
             color="#22d3ee"
-            transmission={0.9}
-            opacity={0.5}
+            transmission={0.4} // Less transparent
+            opacity={0.9} // More solid
             transparent
-            roughness={0}
-            thickness={0.4}
+            roughness={0.1}
+            thickness={1}
             emissive="#0891b2"
-            emissiveIntensity={0.4}
+            emissiveIntensity={1.5}
           />
         </mesh>
       </group>

@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap");
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -21,12 +21,15 @@
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(to bottom right, #020617, #0f172a, #1e1b4b);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: "Plus Jakarta Sans", sans-serif;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
 }
 
 .char,
@@ -34,4 +37,8 @@ body {
   display: inline-block;
 }
 
-/* Name Logo */
+/* Common Styles */
+.mainpage {
+  position: relative;
+  width: 100%;
+}

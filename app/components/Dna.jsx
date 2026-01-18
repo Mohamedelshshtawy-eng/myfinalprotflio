@@ -10,16 +10,15 @@ export default function DNA(props) {
         <group rotation={[Math.PI / 2, 0, 0]}>
           <mesh geometry={nodes.defaultMaterial.geometry} scale={1}>
             <meshPhysicalMaterial
-              color="#22d3ee" // Cyan glow
-              metalness={0.2}
-              roughness={0.1}
+              color="#06b6d4" // Solid Cyan
+              metalness={0.4}
+              roughness={0.2}
               clearcoat={1}
               clearcoatRoughness={0.1}
-              emissive="#06b6d4"
-              emissiveIntensity={0.6}
-              transparent
-              opacity={0.25} // More transparent
-              transmission={0.6} // glass-like
+              emissive="#0891b2"
+              emissiveIntensity={1.2} // Brighter emissive
+              transparent={false} // Make it solid
+              opacity={1}
             />
           </mesh>
         </group>
