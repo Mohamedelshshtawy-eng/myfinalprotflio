@@ -1,12 +1,19 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Sparkles, Environment, Center } from "@react-three/drei";
+import {
+  Float,
+  Sparkles,
+  Environment,
+  Center,
+  Preload,
+} from "@react-three/drei";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DNA from "./Dna";
+import Loader from "./Loader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,18 +104,21 @@ export default function DNAScene() {
         dpr={[1, 1.5]}
         className="fixed inset-0 z-0 pointer-events-none"
       >
-        <ambientLight intensity={1} />
-        <pointLight position={[10, 10, 10]} />
-        <AnimatedDNA />
-        <Sparkles
-          count={200}
-          scale={12}
-          size={2}
-          speed={0.4}
-          opacity={0.5}
-          color="#22d3ee"
-        />
-        <Environment preset="city" />
+        <Suspense fallback={<Loader />}>
+          <ambientLight intensity={1} />
+          <pointLight position={[10, 10, 10]} />
+          <AnimatedDNA />
+          <Sparkles
+            count={200}
+            scale={12}
+            size={2}
+            speed={0.4}
+            opacity={0.5}
+            color="#22d3ee"
+          />
+          <Environment preset="city" />
+          <Preload all />
+        </Suspense>
       </Canvas>
     </div>
   );

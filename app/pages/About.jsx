@@ -8,6 +8,8 @@ import { useGSAP } from "@gsap/react";
 import Flask from "../components/Flask";
 import Laptop from "../components/Laptop";
 import DNA from "../components/Dna";
+import Loader from "../components/Loader";
+import { Preload } from "@react-three/drei";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -239,8 +241,9 @@ const About = () => {
           <ambientLight intensity={1} />
           <pointLight position={[10, 10, 10]} intensity={2} />
           <directionalLight position={[-5, 5, 5]} intensity={1.5} />
-          <Suspense fallback={null}>
+          <Suspense fallback={<Loader />}>
             <FloatingCore />
+            <Preload all />
           </Suspense>
           <Environment preset="city" />
         </Canvas>
