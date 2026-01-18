@@ -54,45 +54,67 @@ const Text = () => {
 
   useGSAP(
     () => {
-      // Pinning the Left Side using GSAP - This is more reliable than CSS sticky
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        pin: leftSideRef.current,
-        pinSpacing: false,
-      });
+      let mm = gsap.matchMedia();
 
-      // Reveal animation for each section on the right
-      gsap.utils.toArray(".content-section").forEach((section) => {
-        gsap.from(section, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 90%",
-            end: "top 40%",
-            scrub: 1,
-          },
-          y: 60,
-          opacity: 0,
-          filter: "blur(10px)",
+      mm.add("(min-width: 768px)", () => {
+        // DESKTOP: Pinning enabled
+        ScrollTrigger.create({
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          pin: leftSideRef.current,
+          pinSpacing: false,
+        });
+
+        gsap.utils.toArray(".content-section").forEach((section) => {
+          gsap.from(section, {
+            scrollTrigger: {
+              trigger: section,
+              start: "top 90%",
+              end: "top 40%",
+              scrub: 1,
+            },
+            y: 60,
+            opacity: 0,
+            filter: "blur(10px)",
+          });
         });
       });
+
+      mm.add("(max-width: 767px)", () => {
+        // MOBILE: Pinning disabled, stack naturally
+        gsap.utils.toArray(".content-section").forEach((section) => {
+          gsap.from(section, {
+            scrollTrigger: {
+              trigger: section,
+              start: "top 90%",
+              end: "top 60%",
+              scrub: 1,
+            },
+            y: 30,
+            opacity: 0,
+            filter: "blur(5px)",
+          });
+        });
+      });
+
+      return () => mm.revert();
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full bg-transparent pl-12 md:pl-48 pr-6 md:pr-20 min-h-screen"
+      className="relative w-full bg-transparent px-6 md:pl-48 md:pr-20 min-h-screen pt-20 md:pt-0"
     >
-      <div className="flex flex-col md:flex-row gap-16 md:gap-32 items-start">
-        {/* Left Side: Solid Pinned via GSAP */}
+      <div className="flex flex-col md:flex-row gap-10 md:gap-32 items-start">
+        {/* Left Side: Solid Pinned via GSAP (Desktop only) */}
         <div
           ref={leftSideRef}
-          className="h-screen flex items-center gap-10 z-20"
+          className="md:h-screen flex items-center gap-6 md:gap-10 z-20"
         >
-          <div className="flex flex-col text-white text-4xl md:text-6xl font-black leading-[0.9] tracking-tighter uppercase shrink-0 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+          <div className="flex flex-col text-white text-5xl md:text-6xl font-black leading-[0.9] tracking-tighter uppercase shrink-0 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
             <span>What</span>
             <span>Are</span>
             <span>We</span>
@@ -100,11 +122,11 @@ const Text = () => {
           </div>
 
           {/* Vertical Bar - Long and Glowing */}
-          <div className="w-1.5 h-[75vh] bg-linear-to-b from-teal-400 via-cyan-500 to-transparent rounded-full shadow-[0_0_25px_rgba(34,211,238,0.7)]"></div>
+          <div className="w-1 md:w-1.5 h-32 md:h-[75vh] bg-linear-to-b from-teal-400 via-cyan-500 to-transparent rounded-full shadow-[0_0_25px_rgba(34,211,238,0.7)]"></div>
         </div>
 
         {/* Right Side: Scrolling Content */}
-        <div className="flex-1 py-[30vh] space-y-[70vh]">
+        <div className="flex-1 py-20 md:py-[30vh] space-y-[30vh] md:space-y-[70vh]">
           {sections.map((item, index) => (
             <div key={index} className="content-section flex flex-col group">
               <h3 className="text-teal-400 text-3xl md:text-4xl font-bold mb-5 group-hover:text-cyan-300 transition-colors duration-500">

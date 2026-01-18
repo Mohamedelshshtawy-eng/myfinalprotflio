@@ -16,55 +16,63 @@ function AnimatedDNA() {
   useGSAP(() => {
     if (!groupRef.current) return;
 
-    // Initial State
-    gsap.set(groupRef.current.position, {
-      x: 0,
-      y: -1,
-      z: 4,
-    });
+    let mm = gsap.matchMedia();
 
-    gsap.set(groupRef.current.rotation, {
-      x: 0,
-      y: 0,
-      z: 0,
-    });
+    mm.add("(min-width: 768px)", () => {
+      // DESKTOP
+      gsap.set(groupRef.current.position, { x: 0, y: -1, z: 4 });
+      gsap.set(groupRef.current.rotation, { x: 0, y: 0, z: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".mainpage",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5,
-      },
-    });
-
-    // ➜ حركة الريح + اللف
-    tl.to(groupRef.current.position, {
-      x: -2,
-      ease: "sine.inOut",
-    })
-      .to(
-        groupRef.current.rotation,
-        {
-          y: Math.PI * 4, // 2 full rotations
-          z: Math.PI / 6, // Tilt for wind effect
-          ease: "sine.inOut",
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".mainpage",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.5,
         },
-        0
-      )
-      .to(groupRef.current.position, {
-        x: 3,
-
-        ease: "sine.inOut",
-      })
-      .to(groupRef.current.rotation, {
-        z: -Math.PI / 6,
-        ease: "sine.inOut",
-      })
-      .to(groupRef.current.position, {
-        x: -10,
-        ease: "sine.inOut",
       });
+
+      tl.to(groupRef.current.position, { x: -2, ease: "sine.inOut" })
+        .to(
+          groupRef.current.rotation,
+          { y: Math.PI * 4, z: Math.PI / 6, ease: "sine.inOut" },
+          0,
+        )
+        .to(groupRef.current.position, { x: 3, ease: "sine.inOut" })
+        .to(groupRef.current.rotation, { z: -Math.PI / 6, ease: "sine.inOut" })
+        .to(groupRef.current.position, { x: -10, ease: "sine.inOut" });
+    });
+
+    mm.add("(max-width: 767px)", () => {
+      // MOBILE
+      gsap.set(groupRef.current.position, { x: 0, y: -0.5, z: 5 });
+      gsap.set(groupRef.current.rotation, { x: 0, y: 0, z: 0 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".mainpage",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2,
+        },
+      });
+
+      tl.to(groupRef.current.position, { x: -1, ease: "sine.inOut" })
+        .to(
+          groupRef.current.rotation,
+          { y: Math.PI * 4, z: Math.PI / 8, ease: "sine.inOut" },
+          0,
+        )
+        .to(groupRef.current.position, { x: 1, ease: "sine.inOut" })
+        .to(groupRef.current.rotation, { z: -Math.PI / 8, ease: "sine.inOut" })
+        .to(groupRef.current.position, {
+          x: -5,
+          opacity: 0,
+          ease: "sine.inOut",
+        });
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (

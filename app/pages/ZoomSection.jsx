@@ -38,7 +38,7 @@ export default function ZoomSection() {
           opacity: 1,
           duration: 0.2,
           ease: "power1.out",
-        }
+        },
       )
         .to(
           svgRef.current,
@@ -47,7 +47,7 @@ export default function ZoomSection() {
             duration: 1,
             ease: "power2.in",
           },
-          0
+          0,
         )
         .to(
           whiteOverlayRef.current,
@@ -56,10 +56,10 @@ export default function ZoomSection() {
             duration: 0.2,
             ease: "none",
           },
-          "-=0.15"
+          "-=0.15",
         ); // White-out transition at the final stage
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -87,7 +87,7 @@ export default function ZoomSection() {
       {/* SVG Text Layer */}
       <div
         ref={svgRef}
-        className="relative z-10 w-full max-w-4xl flex items-center justify-center will-change-transform"
+        className="relative z-10 w-full max-w-4xl px-4 flex items-center justify-center will-change-transform"
       >
         <svg viewBox="0 0 400 100" className="w-full">
           <text
@@ -96,7 +96,7 @@ export default function ZoomSection() {
             textAnchor="middle"
             dominantBaseline="middle"
             className="fill-white font-black uppercase"
-            style={{ fontSize: "60px", letterSpacing: "-2px" }}
+            style={{ fontSize: "50px", letterSpacing: "-1px" }}
           >
             WAIT
           </text>

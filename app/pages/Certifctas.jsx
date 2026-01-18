@@ -45,24 +45,49 @@ const Certifctas = () => {
 
   useGSAP(
     () => {
-      const pin = gsap.fromTo(
-        sectionRef.current,
-        { x: 0 },
-        {
-          x: "-400vw", // تحريك بناءً على عدد الشهادات وعرض الشاشة
-          ease: "none",
-          scrollTrigger: {
-            trigger: triggerRef.current,
-            start: "top top",
-            end: "2000 top",
-            scrub: 1,
-            pin: true,
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        // DESKTOP
+        gsap.fromTo(
+          sectionRef.current,
+          { x: 0 },
+          {
+            x: "-400vw",
+            ease: "none",
+            scrollTrigger: {
+              trigger: triggerRef.current,
+              start: "top top",
+              end: "2000 top",
+              scrub: 1,
+              pin: true,
+            },
           },
-        }
-      );
-      return () => pin.kill();
+        );
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        // MOBILE
+        gsap.fromTo(
+          sectionRef.current,
+          { x: 0 },
+          {
+            x: "-550vw", // More distance for smaller cards
+            ease: "none",
+            scrollTrigger: {
+              trigger: triggerRef.current,
+              start: "top top",
+              end: "2000 top",
+              scrub: 1,
+              pin: true,
+            },
+          },
+        );
+      });
+
+      return () => mm.revert();
     },
-    { scope: triggerRef }
+    { scope: triggerRef },
   );
 
   return (
@@ -70,17 +95,15 @@ const Certifctas = () => {
       <div ref={triggerRef}>
         <div
           ref={sectionRef}
-          className="h-screen w-[550vw] flex items-center relative pl-[10vw]"
+          className="h-screen w-[650vw] md:w-[550vw] flex items-center relative pl-[10vw] md:pl-[10vw]"
         >
           {/* Section Heading Title - Made more prominent */}
-          <div className="flex flex-col shrink-0 mr-40">
-            <h2 className="text-white text-6xl md:text-9xl font-black uppercase tracking-tighter leading-none select-none">
-              <span className="block text-teal-400 opacity-100 mb-2">
-                My Featured
-              </span>
+          <div className="flex flex-col shrink-0 mr-20 md:mr-40">
+            <h2 className="text-white text-5xl md:text-9xl font-black uppercase tracking-tighter leading-none select-none">
+              <span className="block text-teal-400 mb-2">My Featured</span>
               <span className="block text-white opacity-40">Certificates</span>
             </h2>
-            <div className="w-24 h-2 bg-teal-500 mt-8 rounded-full"></div>
+            <div className="w-16 md:w-24 h-2 bg-teal-500 mt-4 md:mt-8 rounded-full"></div>
           </div>
 
           {/* Cards Container */}
@@ -94,13 +117,13 @@ const Certifctas = () => {
                 <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10 flex flex-col justify-between overflow-hidden transition-all duration-500 group-hover:bg-white/10 group-hover:scale-[1.02] shadow-2xl">
                   {/* Decorative Gradient Blob */}
                   <div
-                    className={`absolute -top-20 -right-20 w-64 h-64 bg-gradient-to-br ${cert.color} opacity-20 blur-3xl group-hover:opacity-40 transition-opacity`}
+                    className={`absolute -top-20 -right-20 w-64 h-64 bg-linear-to-br ${cert.color} opacity-20 blur-3xl group-hover:opacity-40 transition-opacity`}
                   ></div>
 
                   <div>
-                    <div className="w-16 h-1 w-full bg-white/20 rounded-full mb-8 overflow-hidden">
+                    <div className="h-1 w-full bg-white/20 rounded-full mb-8 overflow-hidden">
                       <div
-                        className={`h-full bg-gradient-to-r ${cert.color} w-1/3 group-hover:w-full transition-all duration-1000`}
+                        className={`h-full bg-linear-to-r ${cert.color} w-1/3 group-hover:w-full transition-all duration-1000`}
                       ></div>
                     </div>
                     <span className="text-teal-400 font-mono tracking-widest text-sm mb-4 block">

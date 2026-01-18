@@ -19,92 +19,101 @@ function FloatingCore() {
   const masterGroup = useRef();
 
   useGSAP(() => {
-    // Dramatic Initial State: Far apart, tilted inward
-    // Dramatic Initial State: Far apart, slightly tilted
-    gsap.set(flaskRef.current.position, { x: -8, y: 6, z: -1 });
-    gsap.set(flaskRef.current.rotation, { z: 0.5, y: 0.2 });
-    gsap.set(laptopRef.current.position, { x: 0, y: 6, z: 0 });
-    gsap.set(dnaRef.current.position, { x: 8, y: 6, z: -1 });
-    gsap.set(dnaRef.current.rotation, { z: -0.5, y: -0.2 });
+    let mm = gsap.matchMedia();
 
-    // Timeline for the entire journey - Continuous and Overlapping
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".about-container",
-        start: "top top", // Start immediately for a smoother transition
-        end: "bottom bottom",
-        scrub: 1, // Even smoother scrub
-      },
+    mm.add("(min-width: 768px)", () => {
+      // DESKTOP
+      gsap.set(flaskRef.current.position, { x: -8, y: 6, z: -1 });
+      gsap.set(flaskRef.current.rotation, { z: 0.5, y: 0.2 });
+      gsap.set(laptopRef.current.position, { x: 0, y: 6, z: 0 });
+      gsap.set(dnaRef.current.position, { x: 8, y: 6, z: -1 });
+      gsap.set(dnaRef.current.rotation, { z: -0.5, y: -0.2 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".about-container",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.5,
+        },
+      });
+
+      tl.to(flaskRef.current.position, { x: -1.3, y: 0, z: 2, duration: 4 }, 0)
+        .to(flaskRef.current.rotation, { z: 0, y: Math.PI * 2, duration: 4 }, 0)
+        .to(laptopRef.current.position, { x: 0, y: 0, z: 0, duration: 4 }, 0)
+        .to(laptopRef.current.rotation, { y: -Math.PI * 2, duration: 4 }, 0)
+        .to(dnaRef.current.position, { x: 1.3, y: 0, z: 2, duration: 4 }, 0)
+        .to(
+          dnaRef.current.rotation,
+          { z: -2.339, y: Math.PI * 2, duration: 4 },
+          0,
+        )
+        .to(
+          masterGroup.current.rotation,
+          { y: Math.PI * 4, duration: 4, ease: "none" },
+          0,
+        )
+        .to(
+          masterGroup.current.position,
+          { x: 4.8, y: 0, z: 0, duration: 2 },
+          4.2,
+        )
+        .to(
+          masterGroup.current.scale,
+          { x: 0.75, y: 0.75, z: 0.75, duration: 2 },
+          4.2,
+        );
     });
 
-    // Unified Journey for all models - They converge to the center first
-    tl.to(flaskRef.current.position, { x: -1.3, y: 0, z: 2, duration: 4 }, 0)
-      .to(flaskRef.current.rotation, { z: 0, y: Math.PI * 2, duration: 4 }, 0)
+    mm.add("(max-width: 767px)", () => {
+      // MOBILE
+      gsap.set(flaskRef.current.position, { x: -3, y: 6, z: -2 });
+      gsap.set(flaskRef.current.rotation, { z: 0.5, y: 0.2 });
+      gsap.set(laptopRef.current.position, { x: 0, y: 6, z: 0 });
+      gsap.set(dnaRef.current.position, { x: 3, y: 6, z: -2 });
+      gsap.set(dnaRef.current.rotation, { z: -0.5, y: -0.2 });
 
-      .to(laptopRef.current.position, { x: 0, y: 0, z: 0, duration: 4 }, 0)
-      .to(laptopRef.current.rotation, { y: -Math.PI * 2, duration: 4 }, 0)
-
-      .to(dnaRef.current.position, { x: 1.3, y: 0, z: 2, duration: 4 }, 0)
-      .to(
-        dnaRef.current.rotation,
-        {
-          z: -2.339, // Counter-rotate to stand vertically based on internal rotation
-          y: Math.PI * 2,
-          duration: 4,
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".about-container",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2,
         },
+      });
+
+      tl.to(
+        flaskRef.current.position,
+        { x: -0.8, y: 1.5, z: 2, duration: 4 },
         0,
       )
+        .to(flaskRef.current.rotation, { z: 0, y: Math.PI * 2, duration: 4 }, 0)
+        .to(laptopRef.current.position, { x: 0, y: 1, z: 0, duration: 4 }, 0)
+        .to(laptopRef.current.rotation, { y: -Math.PI * 2, duration: 4 }, 0)
+        .to(dnaRef.current.position, { x: 0.8, y: 1.5, z: 2, duration: 4 }, 0)
+        .to(
+          dnaRef.current.rotation,
+          { z: -2.339, y: Math.PI * 2, duration: 4 },
+          0,
+        )
+        .to(
+          masterGroup.current.rotation,
+          { y: Math.PI * 4, duration: 4, ease: "none" },
+          0,
+        )
+        .to(
+          masterGroup.current.position,
+          { x: 0, y: -10, z: -2, duration: 2 },
+          4.2,
+        )
+        .to(
+          masterGroup.current.scale,
+          { x: 0.5, y: 0.5, z: 0.5, duration: 2 },
+          4.2,
+        );
+    });
 
-      // Master Group Spin - Continuous and fluid
-      .to(
-        masterGroup.current.rotation,
-        {
-          y: Math.PI * 4,
-          duration: 4,
-          ease: "none",
-        },
-        0,
-      )
-
-      // Final Phase: Shift the whole group to the Right Side - Perfectly Centered
-      .to(
-        masterGroup.current.position,
-        {
-          x: 4.8, // Move precisely to the right half
-          y: 0, // Center vertically with the form
-          z: 0,
-          duration: 2,
-          ease: "power2.inOut",
-        },
-        4.2,
-      )
-      .to(
-        masterGroup.current.scale,
-        {
-          x: 0.75,
-          y: 0.75,
-          z: 0.75,
-          duration: 2,
-        },
-        4.2,
-      );
-
-    // Phase 2: Final Split for Contact Form
-    // tl.to(
-    //   flaskRef.current.position,
-    //   { x: -8, y: -2, z: -4, duration: 1.5 },
-    //   4.5
-    // )
-    //   .to(
-    //     laptopRef.current.position,
-    //     { x: 8, y: -2, z: -4, duration: 1.5 },
-    //     4.5
-    //   )
-    //   .to(
-    //     dnaRef.current.position,
-    //     { x: 0, y: -15, z: -5, opacity: 0, duration: 1.5 },
-    //     4.5
-    //   );
+    return () => mm.revert();
   }, []);
 
   return (
@@ -237,20 +246,19 @@ const About = () => {
         </Canvas>
       </div>
 
-      {/* 1. Header & Grid Section */}
-      <div className="relative z-10 min-h-[60vh] flex flex-col justify-start px-10 pt-10 pb-20">
+      <div className="relative z-10 min-h-[40vh] md:min-h-[60vh] flex flex-col justify-start px-6 md:px-10 pt-10 pb-20">
         <div className="max-w-7xl mx-auto w-full mb-10 text-center">
-          <h2 className="text-7xl md:text-6xl font-black text-white mb-4 uppercase tracking-tighter">
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-4 uppercase tracking-tighter">
             The <span className="text-teal-400">Journey</span>
           </h2>
-          <div className="w-24 h-2 bg-teal-500 mx-auto rounded-full" />
+          <div className="w-16 md:w-24 h-2 bg-teal-500 mx-auto rounded-full" />
         </div>
       </div>
 
       {/* STAGE 2: The Narrative Body */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center py-40 px-6">
-        <div className="max-w-4xl bg-white/5 p-12 md:p-20 rounded-[4rem] border border-white/10 shadow-2xl backdrop-blur-xl">
-          <div className="text-slate-300 text-base md:text-lg leading-[2] space-y-10 text-justify font-medium">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center py-20 md:py-40 px-4 md:px-6">
+        <div className="max-w-4xl bg-white/5 p-8 md:p-20 rounded-[2.5rem] md:rounded-[4rem] border border-white/10 shadow-2xl backdrop-blur-xl">
+          <div className="text-slate-300 text-sm md:text-lg md:leading-loose space-y-6 md:space-y-10 text-justify font-medium">
             <p>
               I am a graduate of the Faculty of Science, and from the early
               stages of my academic journey, I developed a strong passion for
@@ -261,7 +269,7 @@ const About = () => {
               of biological and chemical systems, which became the cornerstone
               of my professional direction.
             </p>
-            <p className="text-2xl md:text-4xl font-black text-white border-y-2 border-teal-500/20 py-10 tracking-tighter italic text-center">
+            <p className="text-xl md:text-4xl font-black text-white border-y-2 border-teal-500/20 py-6 md:py-10 tracking-tighter italic text-center">
               "My transition was not a shift away from science, but rather an
               expansion of my scientific toolkit."
             </p>
@@ -286,12 +294,12 @@ const About = () => {
       </div>
 
       {/* STAGE 3: Final Contact Section */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-10 md:px-20 lg:px-40">
-        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-20">
-          <div className="w-full md:w-1/2">
+      <div className="relative z-10 min-h-screen flex items-center justify-center px-6 md:px-20 lg:px-40">
+        <div className="w-full flex flex-col md:flex-row items-center justify-center md:justify-between gap-10 md:gap-20">
+          <div className="w-full md:w-1/2 flex justify-center md:justify-start">
             <ContactForm />
           </div>
-          {/* This empty div acts as a spacer for the models on the right */}
+          {/* This empty div acts as a spacer for the models on the right on desktop */}
           <div className="hidden md:block w-1/2" />
         </div>
       </div>
