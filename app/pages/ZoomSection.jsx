@@ -46,6 +46,7 @@ export default function ZoomSection() {
             scale: 150,
             duration: 1,
             ease: "power2.in",
+            force3D: false, // Prevents pixelation by forcing vector re-rendering
           },
           0,
         )
@@ -87,9 +88,14 @@ export default function ZoomSection() {
       {/* SVG Text Layer */}
       <div
         ref={svgRef}
-        className="relative z-10 w-full max-w-4xl px-4 flex items-center justify-center will-change-transform"
+        className="relative z-10 w-full max-w-4xl px-4 flex items-center justify-center"
       >
-        <svg viewBox="0 0 400 100" className="w-full">
+        <svg
+          viewBox="0 0 400 100"
+          className="w-full"
+          textRendering="geometricPrecision"
+          shapeRendering="geometricPrecision"
+        >
           <text
             x="50%"
             y="50%"
