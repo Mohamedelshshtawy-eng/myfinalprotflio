@@ -72,12 +72,12 @@ const Certifctas = () => {
           sectionRef.current,
           { x: 0 },
           {
-            x: "-550vw", // More distance for smaller cards
+            x: "-600vw", // Allow more scroll to see the last slide fully
             ease: "none",
             scrollTrigger: {
               trigger: triggerRef.current,
               start: "top top",
-              end: "2000 top",
+              end: "3000 top", // Increase duration for smoother scroll to the end
               scrub: 1,
               pin: true,
             },
@@ -147,11 +147,11 @@ const Certifctas = () => {
             ))}
 
             {/* Final "Keep Exploring" Slide */}
-            <div className="w-[80vw] md:w-[600px] flex flex-col justify-center items-start shrink-0 pr-20 md:pr-0">
-              <h4 className="text-white text-6xl font-black uppercase tracking-tighter mb-4">
+            <div className="w-[90vw] md:w-[600px] flex flex-col justify-center items-start shrink-0 pr-20 md:pr-0 pl-14">
+              <h4 className="text-white text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 wrap-break-word w-full">
                 More Coming Soon_
               </h4>
-              <p className="text-slate-400 text-xl font-light max-w-md">
+              <p className="text-slate-400 text-lg md:text-2xl font-light max-w-md">
                 Continuously learning and expanding my expertise in the fields
                 of Bioinformatics and AI.
               </p>

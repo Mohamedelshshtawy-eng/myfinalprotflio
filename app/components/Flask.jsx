@@ -21,16 +21,20 @@ export default function Flask(props) {
           geometry={nodes.Cylinder_2.geometry}
           material={materials.Liquid}
         /> */}
-        <mesh geometry={nodes.Cylinder_2.geometry}>
+        <mesh
+          geometry={nodes.Cylinder_2.geometry}
+          castShadow={false}
+          receiveShadow={false}
+        >
           <meshPhysicalMaterial
             color="#22d3ee"
-            transmission={0.4} // Less transparent
-            opacity={0.9} // More solid
+            transmission={0.4}
+            opacity={0.9}
             transparent
             roughness={0.1}
             thickness={1}
             emissive="#0891b2"
-            emissiveIntensity={1.5}
+            emissiveIntensity={0.8}
           />
         </mesh>
       </group>

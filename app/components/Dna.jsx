@@ -8,17 +8,24 @@ export default function DNA(props) {
     <group {...props} dispose={null}>
       <group rotation={[-0.013, 0.235, 2.339]}>
         <group rotation={[Math.PI / 2, 0, 0]}>
-          <mesh geometry={nodes.defaultMaterial.geometry} scale={1}>
+          <mesh
+            geometry={nodes.defaultMaterial.geometry}
+            scale={1}
+            castShadow={false}
+            receiveShadow={false}
+          >
             <meshPhysicalMaterial
               color="#06b6d4"
               metalness={0.9}
-              roughness={0.1}
+              roughness={0}
               clearcoat={1}
+              clearcoatRoughness={0}
               emissive="#06b6d4"
-              emissiveIntensity={1.2}
+              emissiveIntensity={0.2}
               transparent={true}
-              opacity={0.6}
-              transmission={0.8}
+              opacity={0.25}
+              depthWrite={false}
+              thickness={0.5}
             />
           </mesh>
         </group>

@@ -101,7 +101,7 @@ export default function DNAScene() {
       <Canvas
         camera={{ position: [0, 0, 10], fov: 45 }}
         gl={{ antialias: true }}
-        dpr={[1, 1.5]}
+        dpr={[1, 2]}
         className="fixed inset-0 z-0 pointer-events-none"
       >
         <Suspense fallback={null}>

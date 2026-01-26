@@ -63,11 +63,12 @@ const Hero = () => {
       );
 
       // 4. Infinite Tech Bar (Marquee)
+      const marqueeWidth = marqueeRef.current.scrollWidth / 3;
       gsap.to(marqueeRef.current, {
-        x: "-50%",
-        duration: 30,
+        x: -marqueeWidth,
+        duration: 20,
         repeat: -1,
-        ease: "linear",
+        ease: "none",
       });
     },
     { scope: containerRef },
@@ -80,10 +81,10 @@ const Hero = () => {
     >
       <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center mb-20 md:mb-32 md:-translate-y-10">
         {/* Left: Image with Rotating Border */}
-        <div className="flex justify-center items-center relative order-2 md:order-1 -translate-y-4 md:-translate-y-8">
+        <div className="flex justify-center items-center relative order-2 md:order-1 -translate-y-20 md:-translate-y-8">
           <div
             ref={imageRef}
-            className="relative w-56 h-56 md:w-80 md:h-80 lg:w-96 lg:h-96"
+            className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96"
           >
             {/* Rotating Dashed Border */}
             <div
@@ -95,7 +96,7 @@ const Hero = () => {
               <img
                 src="/two.jpeg"
                 alt="Mohamed Elshshtawy"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover object-[center_30%]"
               />
             </div>
           </div>
@@ -124,7 +125,7 @@ const Hero = () => {
             technologies. I always strive to transform complexity into
             simplicity and science into intelligent digital solutions.
           </p>
-          <div className="flex justify-center md:justify-start gap-4 mt-4">
+          <div className="flex justify-center md:justify-start gap-4 mt-8">
             <button className="px-6 md:px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-full transition-all transform hover:scale-105 shadow-lg shadow-teal-500/30 text-sm md:text-base">
               Contact Me
             </button>
@@ -136,7 +137,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom: Infinite Tech Bar - Moved Lower */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden py-8 bg-white/80 backdrop-blur-md border-t border-slate-100 z-20">
+      <div className="absolute bottom-[-10px] md:bottom-0 left-0 w-full overflow-hidden py-10 bg-white/80 backdrop-blur-md border-t border-slate-100 z-20">
         <div
           ref={marqueeRef}
           className="flex whitespace-nowrap gap-12 items-center w-max px-6"

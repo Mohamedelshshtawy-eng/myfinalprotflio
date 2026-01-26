@@ -9,7 +9,7 @@ import Flask from "../components/Flask";
 import Laptop from "../components/Laptop";
 import DNA from "../components/Dna";
 import Loader from "../components/Loader";
-import { Preload } from "@react-three/drei";
+import { Preload, OrbitControls } from "@react-three/drei";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -133,6 +133,29 @@ function FloatingCore() {
   );
 }
 
+const MobileModelBox = ({ children, title, description }) => {
+  return (
+    <div className="w-full bg-white/5 border border-white/10 rounded-4xl p-6 flex flex-col gap-4 backdrop-blur-md">
+      <div className="h-64 w-full relative">
+        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+          <ambientLight intensity={1} />
+          <pointLight position={[10, 10, 10]} />
+          <Suspense fallback={null}>
+            <Center>{children}</Center>
+          </Suspense>
+          <OrbitControls enableZoom={false} />
+        </Canvas>
+      </div>
+      <div className="text-center">
+        <h4 className="text-teal-400 font-bold text-xl mb-2 uppercase tracking-wider">
+          {title}
+        </h4>
+        <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+};
+
 const Footer = () => {
   return (
     <footer className="relative z-10 w-full py-20 px-10 border-t border-white/5 bg-black/20 backdrop-blur-3xl">
@@ -231,8 +254,8 @@ const ContactForm = () => {
 const About = () => {
   return (
     <section className="about-container relative w-full bg-[#020617]">
-      {/* Fixed Background Context - Behind text */}
-      <div className="fixed top-0 left-0 w-full h-screen z-0 pointer-events-none">
+      {/* Fixed Background Context - Behind text - Hidden on mobile for the last section */}
+      <div className="fixed top-0 left-0 w-full h-screen z-0 pointer-events-none hidden md:block">
         <Canvas
           camera={{ position: [0, 0, 12], fov: 40 }}
           gl={{ antialias: true }}
@@ -247,6 +270,11 @@ const About = () => {
           </Suspense>
           <Environment preset="city" />
         </Canvas>
+      </div>
+
+      {/* Mobile-only background for top sections - REMOVED to keep background clean as requested */}
+      <div className="fixed top-0 left-0 w-full h-screen z-0 pointer-events-none md:hidden overflow-hidden">
+        {/* Empty or simple gradient if needed, keeping it empty for now to hide models */}
       </div>
 
       <div className="relative z-10 min-h-[40vh] md:min-h-[60vh] flex flex-col justify-start px-6 md:px-10 pt-10 pb-20">
@@ -297,8 +325,30 @@ const About = () => {
       </div>
 
       {/* STAGE 3: Final Contact Section */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-6 md:px-20 lg:px-40">
-        <div className="w-full flex flex-col md:flex-row items-center justify-center md:justify-between gap-10 md:gap-20">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 md:px-20 lg:px-40 py-20">
+        {/* Mobile-only Model Boxes Section */}
+        <div className="w-full flex flex-col gap-10 mb-20 md:hidden">
+          <MobileModelBox
+            title="Scientific Foundation"
+            description="The starting point in the lab, understanding the biological systems and chemical reactions that form our world."
+          >
+            <Flask scale={1} />
+          </MobileModelBox>
+          <MobileModelBox
+            title="Digital Evolution"
+            description="Bridging the gap between raw data and intelligent solutions through advanced software engineering."
+          >
+            <Laptop scale={4} />
+          </MobileModelBox>
+          <MobileModelBox
+            title="Bioinformatics"
+            description="Decoding the secrets of life using computational power to drive the future of medicine and research."
+          >
+            <DNA scale={0.15} />
+          </MobileModelBox>
+        </div>
+
+        <div className="w-full flex flex-col md:flex-row items-center justify-center md:justify-between gap-10 md:gap-20 font-bold uppercase tracking-widest text-[#000000]">
           <div className="w-full md:w-1/2 flex justify-center md:justify-start">
             <ContactForm />
           </div>
