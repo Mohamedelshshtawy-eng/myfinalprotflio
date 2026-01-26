@@ -80,8 +80,8 @@ const Hero = () => {
       className="relative min-h-screen w-full flex flex-col justify-center items-center px-10 pt-20 overflow-hidden bg-white z-10"
     >
       <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center mb-20 md:mb-32 md:-translate-y-10">
-        {/* Left: Image with Rotating Border */}
-        <div className="flex justify-center items-center relative order-2 md:order-1 -translate-y-20 md:-translate-y-8">
+        {/* Left: Image with Rotating Border - Now appears first on mobile */}
+        <div className="flex justify-center items-center relative order-1 md:order-1 -translate-y-10 md:-translate-y-8">
           <div
             ref={imageRef}
             className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96"
@@ -104,7 +104,7 @@ const Hero = () => {
 
         {/* Right: Description Text */}
         <div
-          className="hero-text-content text-center md:text-left flex flex-col gap-4 md:gap-6 order-1 md:order-2"
+          className="hero-text-content text-center md:text-left flex flex-col gap-3 md:gap-6 order-2 md:order-2 -translate-y-10 md:translate-y-0"
           dir="ltr"
         >
           <h1 className="text-4xl md:text-7xl font-black text-slate-900 leading-tight">
