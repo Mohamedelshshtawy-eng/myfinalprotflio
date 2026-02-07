@@ -141,7 +141,9 @@ const MobileModelBox = ({ children, title, description }) => {
           <ambientLight intensity={1} />
           <pointLight position={[10, 10, 10]} />
           <Suspense fallback={null}>
-            <Center>{children}</Center>
+            <Float speed={3} rotationIntensity={2} floatIntensity={2}>
+              <Center>{children}</Center>
+            </Float>
           </Suspense>
           <OrbitControls enableZoom={false} />
         </Canvas>
