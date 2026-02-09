@@ -17,7 +17,7 @@ export default function Home() {
       <LandPage />
       <ZoomSection />
       <Hero />
-      <Skills />
+      {/* <Skills /> */}
       <Journey />
       <About />
     </div>

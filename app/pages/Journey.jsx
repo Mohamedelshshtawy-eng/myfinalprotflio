@@ -293,18 +293,18 @@ const Journey = () => {
                   <div className="absolute inset-0 bg-linear-to-br from-teal-400/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
                   <div
-                    className={`flex items-center gap-3 md:gap-6 mb-2 md:mb-4 ${
+                    className={`flex items-start md:items-center gap-2 md:gap-6 mb-2 md:mb-4 ${
                       point.side === "left" ? "flex-row-reverse" : "flex-row"
                     }`}
                   >
-                    <div className="w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-2xl bg-white/10 flex items-center justify-center text-xl md:text-4xl shadow-inner group-hover:scale-110 transition-transform duration-500">
+                    <div className="w-8 h-8 md:w-16 md:h-16 shrink-0 rounded-lg md:rounded-2xl bg-white/10 flex items-center justify-center text-lg md:text-4xl shadow-inner group-hover:scale-110 transition-transform duration-500">
                       {point.icon}
                     </div>
-                    <div>
-                      <h3 className="text-sm md:text-3xl font-bold text-white group-hover:text-teal-400 transition-colors duration-500 leading-tight">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-[11px] sm:text-xs md:text-3xl font-bold text-white group-hover:text-teal-400 transition-colors duration-500 leading-tight wrap-break-word">
                         {point.title}
                       </h3>
-                      <p className="text-teal-400 font-mono text-[8px] md:text-xs tracking-[0.1em] md:tracking-[0.2em] uppercase mt-1">
+                      <p className="text-teal-400 font-mono text-[7px] md:text-xs tracking-[0.05em] md:tracking-[0.2em] uppercase mt-0.5 md:mt-1">
                         {point.subtitle}
                       </p>
                     </div>

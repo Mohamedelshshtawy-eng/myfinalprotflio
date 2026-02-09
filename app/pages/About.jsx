@@ -133,6 +133,16 @@ function FloatingCore() {
   );
 }
 
+const RotatingWrapper = ({ children }) => {
+  const ref = useRef();
+  useFrame((state, delta) => {
+    if (ref.current) {
+      ref.current.rotation.y += delta * 0.6;
+    }
+  });
+  return <group ref={ref}>{children}</group>;
+};
+
 const MobileModelBox = ({ children, title, description }) => {
   return (
     <div className="w-full bg-white/5 border border-white/10 rounded-4xl p-6 flex flex-col gap-4 backdrop-blur-md">
@@ -141,8 +151,10 @@ const MobileModelBox = ({ children, title, description }) => {
           <ambientLight intensity={1} />
           <pointLight position={[10, 10, 10]} />
           <Suspense fallback={null}>
-            <Float speed={3} rotationIntensity={2} floatIntensity={2}>
-              <Center>{children}</Center>
+            <Float speed={2.5} rotationIntensity={1.5} floatIntensity={1.5}>
+              <RotatingWrapper>
+                <Center>{children}</Center>
+              </RotatingWrapper>
             </Float>
           </Suspense>
           <OrbitControls enableZoom={false} enableRotate={true} />
