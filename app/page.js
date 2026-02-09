@@ -2,6 +2,7 @@
 import React from "react";
 import LandPage from "./landpage/page";
 import Hero from "./pages/Hero";
+import Skills from "./pages/Skills";
 import ZoomSection from "./pages/ZoomSection";
 import About from "./pages/About";
 import Cursor from "./components/Cursor";
@@ -16,6 +17,7 @@ export default function Home() {
       <LandPage />
       <ZoomSection />
       <Hero />
+      <Skills />
       <Journey />
       <About />
     </div>

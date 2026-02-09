@@ -145,7 +145,7 @@ const MobileModelBox = ({ children, title, description }) => {
               <Center>{children}</Center>
             </Float>
           </Suspense>
-          <OrbitControls enableZoom={false} />
+          <OrbitControls enableZoom={false} enableRotate={true} />
         </Canvas>
       </div>
       <div className="text-center">
