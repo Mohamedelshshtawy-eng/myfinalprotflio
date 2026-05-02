@@ -10,6 +10,8 @@ import Laptop from "../components/Laptop";
 import DNA from "../components/Dna";
 import Loader from "../components/Loader";
 import { Preload, OrbitControls } from "@react-three/drei";
+import emailjs from "@emailjs/browser";
+import { useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -209,21 +211,43 @@ const Footer = () => {
 };
 
 const ContactForm = () => {
+  const form = useRef();
+  const [status, setStatus] = useState(""); // "", "sending", "success", "error"
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    emailjs
+      .sendForm(
+        "service_o3jffz8", // Replace with your Service ID
+        "template_1o7ubok", // Replace with your Template ID
+        form.current,
+        "x9M4jxInSXK6KugyH", // Replace with your Public Key
+      )
+      .then(
+        (result) => {
+          setStatus("success");
+          form.current.reset();
+          setTimeout(() => setStatus(""), 5000);
+        },
+        (error) => {
+          console.error(error);
+          setStatus("error");
+          setTimeout(() => setStatus(""), 5000);
+        },
+      );
+  };
+
   return (
-    <div className="w-full max-w-2xl bg-white/5 backdrop-blur-3xl p-10 md:p-14 rounded-[3.5rem] border border-white/10 shadow-3xl relative z-30">
+    <div
+      id="contact"
+      className="w-full max-w-2xl bg-white/5 backdrop-blur-3xl p-10 md:p-14 rounded-[3.5rem] border border-white/10 shadow-3xl relative z-30"
+    >
       <h3 className="text-4xl md:text-5xl font-black text-white mb-8 uppercase tracking-tighter text-center">
         Let's <span className="text-teal-400">Connect</span>
       </h3>
-      {/* Integrated with Web3Forms - You'll need to get a free Access Key from web3forms.com */}
-      <form
-        action="https://api.web3forms.com/submit"
-        method="POST"
-        className="space-y-5"
-      >
-        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
-        <input type="hidden" name="to" value="mohamedelshshtawy745@gmail.com" />
-        <input type="hidden" name="from_name" value="Portfolio Contact" />
-
+      <form ref={form} onSubmit={sendEmail} className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <input
             type="text"
@@ -234,7 +258,7 @@ const ContactForm = () => {
           />
           <input
             type="email"
-            name="email"
+            name="reply_to"
             required
             placeholder="Email"
             className="w-full px-8 py-5 bg-white/10 border border-white/5 rounded-3xl focus:ring-2 focus:ring-teal-500 outline-none transition-all font-bold text-white placeholder:text-slate-500"
@@ -242,9 +266,9 @@ const ContactForm = () => {
         </div>
         <input
           type="text"
-          name="subject"
+          name="message_subject"
           required
-          placeholder="Subject"
+          placeholder="Message Subject"
           className="w-full px-8 py-5 bg-white/10 border border-white/5 rounded-3xl focus:ring-2 focus:ring-teal-500 outline-none transition-all font-bold text-white placeholder:text-slate-500"
         />
         <textarea
@@ -256,10 +280,26 @@ const ContactForm = () => {
         />
         <button
           type="submit"
-          className="w-full py-6 bg-teal-500 hover:bg-teal-400 text-slate-950 font-black rounded-3xl transition-all shadow-2xl uppercase tracking-widest text-lg"
+          disabled={status === "sending"}
+          className={`w-full py-6 font-black rounded-3xl transition-all shadow-2xl uppercase tracking-widest text-lg ${
+            status === "sending"
+              ? "bg-slate-600 cursor-not-allowed"
+              : "bg-teal-500 hover:bg-teal-400 text-slate-950"
+          }`}
         >
-          Send Message
+          {status === "sending" ? "Sending..." : "Send Message"}
         </button>
+
+        {status === "success" && (
+          <p className="text-teal-400 font-bold text-center mt-4">
+            Message sent successfully!
+          </p>
+        )}
+        {status === "error" && (
+          <p className="text-red-400 font-bold text-center mt-4">
+            Failed to send message. Please try again.
+          </p>
+        )}
       </form>
     </div>
   );
@@ -267,7 +307,10 @@ const ContactForm = () => {
 
 const About = () => {
   return (
-    <section className="about-container relative w-full bg-[#020617]">
+    <section
+      id="about"
+      className="about-container relative w-full bg-[#020617]"
+    >
       {/* Fixed Background Context - Behind text - Hidden on mobile for the last section */}
       <div className="fixed top-0 left-0 w-full h-screen z-0 pointer-events-none hidden md:block">
         <Canvas
