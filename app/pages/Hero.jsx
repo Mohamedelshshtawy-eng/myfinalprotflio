@@ -32,8 +32,12 @@ const Hero = () => {
   const textRef = useRef(null);
   const marqueeRef = useRef(null);
   const [showCVModal, setShowCVModal] = useState(false);
+  const [showUniModal, setShowUniModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const modalRef = useRef(null);
   const modalContentRef = useRef(null);
+  const uniModalRef = useRef(null);
+  const uniModalContentRef = useRef(null);
   const router = useRouter();
 
   const scrollToAbout = () => {
@@ -41,6 +45,10 @@ const Hero = () => {
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const scrollToCertificates = () => {
+    setShowUniModal(true);
   };
 
   useGSAP(
@@ -106,8 +114,27 @@ const Hero = () => {
           },
         );
       }
+      
+      if (showUniModal) {
+        gsap.fromTo(
+          uniModalRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.3 },
+        );
+        gsap.fromTo(
+          uniModalContentRef.current,
+          { scale: 0.8, y: 20, opacity: 0 },
+          {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: "back.out(1.7)",
+          },
+        );
+      }
     },
-    { dependencies: [showCVModal], scope: containerRef },
+    { dependencies: [showCVModal, showUniModal], scope: containerRef },
   );
 
   return (
@@ -174,6 +201,20 @@ const Hero = () => {
                 className="px-6 md:px-8 py-3 border-2 border-teal-600 text-teal-600 font-bold rounded-full transition-all hover:bg-teal-600 hover:text-white transform hover:scale-105 shadow-lg shadow-teal-500/10 text-sm md:text-base"
               >
                 My CV
+              </button>
+              
+              {/* Special University Certificates Button */}
+              <button 
+                onClick={scrollToCertificates}
+                className="relative group px-6 md:px-8 py-3 font-bold rounded-full overflow-hidden transition-all transform hover:scale-105 shadow-xl text-sm md:text-base"
+              >
+                <span className="absolute inset-0 w-full h-full bg-linear-to-r from-indigo-600 via-teal-500 to-indigo-600 bg-[length:200%_auto] animate-shimmer" />
+                <span className="relative text-white flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                  University Certificates
+                </span>
+                {/* Glow Effect */}
+                <span className="absolute -inset-1 bg-teal-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </button>
             </div>
           </div>
@@ -351,6 +392,126 @@ const Hero = () => {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* University Certificates Modal */}
+      {showUniModal && (
+        <div 
+          ref={uniModalRef}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md"
+          onClick={() => setShowUniModal(false)}
+        >
+          <div 
+            ref={uniModalContentRef}
+            className="bg-white rounded-[2.5rem] p-6 md:p-10 max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-8 sticky top-0 bg-white z-20 pb-4 border-b border-slate-100">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-black text-slate-900">University <span className="text-teal-600">Credentials</span></h2>
+                <p className="text-slate-500 font-medium mt-1">Official Degree and Academic Transcripts</p>
+              </div>
+              <button 
+                onClick={() => setShowUniModal(false)}
+                className="p-3 hover:bg-slate-100 rounded-full transition-colors group"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 group-hover:text-slate-900 transition-colors"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+              {/* Certificate One - Now Transcript */}
+              <div className="flex flex-col gap-4 group">
+                <div 
+                  onClick={() => setSelectedImage("/image_unviersityoen.jpeg")}
+                  className="relative aspect-[3/4] md:aspect-auto md:h-[500px] rounded-3xl overflow-hidden border-2 border-slate-100 shadow-lg group-hover:border-teal-500 transition-colors bg-slate-50 cursor-zoom-in"
+                >
+                  <img 
+                    src="/image_unviersityoen.jpeg" 
+                    alt="Academic Transcript" 
+                    className="w-full h-full object-contain md:object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-6">
+                    <p className="text-white font-bold">Academic Transcript</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-2">
+                  <span className="font-bold text-slate-700 text-lg">Transcript</span>
+                  <a 
+                    href="/image_unviersityoen.jpeg" 
+                    download="Mohamed_Transcript.jpeg"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-teal-500/20"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download
+                  </a>
+                </div>
+              </div>
+
+              {/* Certificate Two - Now University Degree */}
+              <div className="flex flex-col gap-4 group">
+                <div 
+                  onClick={() => setSelectedImage("/image_unvirsitytwo.jpeg")}
+                  className="relative aspect-[3/4] md:aspect-auto md:h-[500px] rounded-3xl overflow-hidden border-2 border-slate-100 shadow-lg group-hover:border-indigo-500 transition-colors bg-slate-50 cursor-zoom-in"
+                >
+                  <img 
+                    src="/image_unvirsitytwo.jpeg" 
+                    alt="University Degree" 
+                    className="w-full h-full object-contain md:object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-6">
+                    <p className="text-white font-bold">University Degree</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between px-2">
+                  <span className="font-bold text-slate-700 text-lg">University Degree</span>
+                  <a 
+                    href="/image_unvirsitytwo.jpeg" 
+                    download="Mohamed_Degree.jpeg"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/20"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Lightbox / Fullscreen Image Overlay */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 md:p-10"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button 
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all z-[210]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          
+          <img 
+            src={selectedImage} 
+            alt="Full view" 
+            className="max-w-full max-h-full object-contain shadow-2xl animate-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+            <a 
+              href={selectedImage} 
+              download 
+              className="px-8 py-4 bg-teal-500 text-slate-950 font-black rounded-full flex items-center gap-3 hover:scale-105 transition-transform shadow-2xl shadow-teal-500/40"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download Original
+            </a>
           </div>
         </div>
       )}
