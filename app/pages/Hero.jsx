@@ -292,11 +292,7 @@ const Hero = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Teacher CV */}
-                <a
-                  href="/Teacher-CV.pdf"
-                  target="_blank"
-                  className="group relative flex flex-col p-6 rounded-2xl border-2 border-slate-100 hover:border-teal-500 transition-all hover:shadow-xl hover:shadow-teal-500/10 bg-slate-50/50"
-                >
+                <div className="group relative flex flex-col p-6 rounded-2xl border-2 border-slate-100 hover:border-teal-500 transition-all hover:shadow-xl hover:shadow-teal-500/10 bg-slate-50/50">
                   <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -318,36 +314,31 @@ const Hero = () => {
                   <h3 className="text-xl font-bold text-slate-900 mb-2">
                     Teacher CV
                   </h3>
-                  <p className="text-slate-500 text-sm">
+                  <p className="text-slate-500 text-sm mb-4">
                     Focuses on educational background, sciences, and teaching
                     experience.
                   </p>
-                  <div className="mt-4 flex items-center text-teal-600 font-bold text-sm">
-                    View PDF
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="ml-2 group-hover:translate-x-1 transition-transform"
+                  <div className="mt-auto flex gap-3">
+                    <a
+                      href="/Teacher-CV.pdf"
+                      target="_blank"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 border-2 border-teal-600 text-teal-600 font-bold rounded-xl hover:bg-teal-50 transition-colors text-sm"
                     >
-                      <path d="M5 12h14"></path>
-                      <path d="m12 5 7 7-7 7"></path>
-                    </svg>
+                      View
+                    </a>
+                    <a
+                      href="/Teacher-CV.pdf"
+                      download="Mohamed_Teacher_CV.pdf"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition-all shadow-lg shadow-teal-500/20 text-sm"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                      Download
+                    </a>
                   </div>
-                </a>
+                </div>
 
                 {/* Software CV */}
-                <a
-                  href="/Software-CV.pdf"
-                  target="_blank"
-                  className="group relative flex flex-col p-6 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 transition-all hover:shadow-xl hover:shadow-indigo-500/10 bg-slate-50/50"
-                >
+                <div className="group relative flex flex-col p-6 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 transition-all hover:shadow-xl hover:shadow-indigo-500/10 bg-slate-50/50">
                   <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -367,29 +358,28 @@ const Hero = () => {
                   <h3 className="text-xl font-bold text-slate-900 mb-2">
                     Software CV
                   </h3>
-                  <p className="text-slate-500 text-sm">
+                  <p className="text-slate-500 text-sm mb-4">
                     Focuses on full-stack development, technologies, and digital
                     solutions.
                   </p>
-                  <div className="mt-4 flex items-center text-indigo-600 font-bold text-sm">
-                    View PDF
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="ml-2 group-hover:translate-x-1 transition-transform"
+                  <div className="mt-auto flex gap-3">
+                    <a
+                      href="/Software-CV.pdf"
+                      target="_blank"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 border-2 border-indigo-600 text-indigo-600 font-bold rounded-xl hover:bg-indigo-50 transition-colors text-sm"
                     >
-                      <path d="M5 12h14"></path>
-                      <path d="m12 5 7 7-7 7"></path>
-                    </svg>
+                      View
+                    </a>
+                    <a
+                      href="/Software-CV.pdf"
+                      download="Mohamed_Software_CV.pdf"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 text-sm"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                      Download
+                    </a>
                   </div>
-                </a>
+                </div>
               </div>
             </div>
           </div>
