@@ -18,9 +18,7 @@ export default function Home() {
       <LandPage />
       <ZoomSection />
       <Hero />
-      {/* <Skills /> */}
       <Journey />
-      {/* <Certifctas /> */}
       <About />
     </div>
   );

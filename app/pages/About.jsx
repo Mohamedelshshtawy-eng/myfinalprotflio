@@ -220,10 +220,10 @@ const ContactForm = () => {
 
     emailjs
       .sendForm(
-        "service_o3jffz8", // Replace with your Service ID
-        "template_1o7ubok", // Replace with your Template ID
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
         form.current,
-        "x9M4jxInSXK6KugyH", // Replace with your Public Key
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       )
       .then(
         (result) => {
